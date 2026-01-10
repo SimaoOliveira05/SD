@@ -73,32 +73,32 @@ public class Cache {
     // --- MÉTODOS PÚBLICOS (Setters) ---
 
     public void setQuantidade(int day, String product, int valor) {
-        lock.writeLock().lock();
+        lock.lock();
         try {
             CacheKey key = new CacheKey(day, product);
             map.computeIfAbsent(key, k -> new CacheData()).quantidade = valor;
         } finally {
-            lock.writeLock().unlock();
+            lock.unlock();
         }
     }
 
     public void setVolume(int day, String product, double valor) {
-        lock.writeLock().lock();
+        lock.lock();
         try {
             CacheKey key = new CacheKey(day, product);
             map.computeIfAbsent(key, k -> new CacheData()).volume = valor;
         } finally {
-            lock.writeLock().unlock();
+            lock.unlock();
         }
     }
 
     public void setMaxPrice(int day, String product, double valor) {
-        lock.writeLock().lock();
+        lock.lock();
         try {
             CacheKey key = new CacheKey(day, product);
             map.computeIfAbsent(key, k -> new CacheData()).maxPrice = valor;
         } finally {
-            lock.writeLock().unlock();
+            lock.unlock();
         }
     }
 }

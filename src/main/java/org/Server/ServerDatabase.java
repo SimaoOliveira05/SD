@@ -410,13 +410,18 @@ class ServerDatabase {
      * @return Os dados do dia (pode ser vazio)
      */
     public Map<Integer, List<Venda>> getDayData(int day) {
-        // 1. Verifica se está em memória
-        Map<Integer, List<Venda>> inMemory = daysInMemory.get(day);
-        if (inMemory != null) {
-            return inMemory;
+        // 1. Verifica se está em memória (com lock para evitar race condition com endDay)
+        ordersLock.readLock().lock();
+        try {
+            Map<Integer, List<Venda>> inMemory = daysInMemory.get(day);
+            if (inMemory != null) {
+                return inMemory;
+            }
+        } finally {
+            ordersLock.readLock().unlock();
         }
 
-        // 2. Fallback: carrega do disco
+        // 2. Fallback: carrega do disco (fora do lock - I/O pode ser lento)
         return persistence.deserializeDay(day);
     }
 
