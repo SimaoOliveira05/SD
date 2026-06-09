@@ -1,4 +1,4 @@
-# amazUM
+# AmazUM
 
 Distributed market analytics and visualization system for sales and statistics, developed for the Distributed Systems course. The application allows exploring metrics about products, sales, users, and market trends with an interactive interface and concurrent operations.
 
